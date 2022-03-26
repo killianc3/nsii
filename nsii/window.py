@@ -2,12 +2,13 @@ from . import tools
 
 class Window:
 
-	def __init__(self, buffer, size=(10, 10), pos=(0, 0)):
+	def __init__(self, buffer, coords, size=(10, 10), pos=(0, 0)):
 
 		self.size = size
 		self.pos = pos
 
 		self._buffer = buffer
+		self._coords = coords
 
 
 	@property
@@ -32,7 +33,10 @@ class Window:
 
 		if pixel[-3] >= 0 and pixel[-3] < self.size[0] and pixel[-2] >= 0 and pixel[-2] < self.size[1]:
 
-			self._buffer.append((*pixel[:-3], pixel[-2] + 1 + self.pos[1], pixel[-3] + 1 + self.pos[0], pixel[-1]))
+			self._buffer[pixel[-2] + 1 + self.pos[1]][pixel[-3] + 1 + self.pos[0]] = (pixel[:-3], pixel[-1])
+			self._coords.add((pixel[-3] + 1 + self.pos[0], pixel[-2] + 1 + self.pos[1]))
+
+			#self._buffer.append((pixel[:-3], pixel[-2] + 1 + self.pos[1], pixel[-3] + 1 + self.pos[0], pixel[-1]))
 
 
 	def dot(self, *args, **kwargs):

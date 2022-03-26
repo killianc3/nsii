@@ -4,18 +4,20 @@ class Core:
 
 	def __init__(self):
 
-		self.buffer = []
+		self.buffer = [[None]*1920 for a in range(1080)]
+		self.coords = set()
 
 
 	def draw(self, update, wipe=False):
 
 		if wipe: sys.stdout.write('\x1b[2J')
 
-		for pixel in self.buffer:
+		while len(self.coords) > 0:
 
-			sys.stdout.write('\x1b[38;2;{};{};{}m\x1b[48;2;{};{};{}m\x1b[{};{}H{}'.format(*pixel))
+			x, y = self.coords.pop()
+			color, car = self.buffer[y][x]
 
-		self.buffer.clear()
+			sys.stdout.write('\x1b[38;2;{};{};{}m\x1b[{};{}H{}'.format(*color, y, x, car))
+
 		update()
-
 		sys.stdout.flush()

@@ -75,11 +75,11 @@ class Nsii:
 
 
 	def new_window(self, *args, **kwargs):
-		return window.Window(self._core.buffer, *args, **kwargs)
+		return window.Window(self._core.buffer, self._core.coords, *args, **kwargs)
 
 
 	def new_image(self, *args, **kwargs):
-		return image.Image(self._core.buffer, *args, **kwargs)
+		return image.Image(self._core.buffer, self._core.coords, *args, **kwargs)
 
 
 	def draw(self, *args, **kwargs):
