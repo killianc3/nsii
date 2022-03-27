@@ -34,7 +34,7 @@ class Terminal:
 
 	@property
 	def size(self):
-		return (os.get_terminal_size()[0] + 1, os.get_terminal_size()[1] + 1)
+		return (os.get_terminal_size()[0], os.get_terminal_size()[1])
 
 	@size.setter
 	def size(self, new_size):

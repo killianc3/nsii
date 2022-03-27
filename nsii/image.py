@@ -10,6 +10,9 @@ class Image:
 		self._img = []
 		self._img_size = None
 
+		self._cache = [[None for a in range(400)] for b in range(400)]
+		self._cache_size = None
+
 		self.ppmread(path)
 
 
@@ -33,23 +36,41 @@ class Image:
 
 	def show(self):
 
-		of_x, of_y = self._img_size[0] / self.size[0], self._img_size[1] / self.size[1]
-		po_x, po_y = 0, 0
+		if self.size == self._cache_size:
 
-		for y in range(self.size[1] - 1):
-			for x in range(self.size[0] - 1):
+			for y in range(self.size[1]):
+				for x in range(self.size[0]):
 
-				r, g, b = self._img[round(po_y)][round(po_x)]
+					pixel = self._cache[y][x]
 
-				self._buffer[y + self.pos[1] + 1][x + self.pos[0] + 1] = ((r, g, b), '█')
-				self._coords.add((1 + x + self.pos[0], 1 + y + self.pos[1]))
-				#self._buffer.append((r, g, b, y + self.pos[1], x + self.pos[0], '█'))
+					if self._buffer[y + self.pos[1]][x + self.pos[0]] != pixel:
 
-				po_x += of_x
+						self._buffer[y + self.pos[1]][x + self.pos[0]] = pixel
 
-			po_x = 0
-			po_y += of_y
+						self._coords.add((x + self.pos[0], y + self.pos[1]))
 
+		else:
+
+			of_x, of_y = self._img_size[0] / self.size[0], self._img_size[1] / self.size[1]
+			po_x, po_y = 0, 0
+
+			for y in range(self.size[1]):
+				for x in range(self.size[0]):
+
+					r, g, b = self._img[round(po_y)][round(po_x)]
+
+					self._buffer[y + self.pos[1]][x + self.pos[0]] = ((r, g, b), '█')
+					self._coords.add((x + self.pos[0], y + self.pos[1]))
+
+					self._cache[y][x] = ((r, g, b), '█')
+
+					po_x += of_x
+
+				po_x = 0
+				po_y += of_y
+
+
+			self._cache_size = self.size
 
 	def ppmread(self, filename):
 		with open(filename, 'rb') as f:
