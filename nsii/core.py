@@ -5,26 +5,34 @@ class Core:
 
 	def __init__(self):
 
-		sys.stdout = io.TextIOWrapper(io.BufferedWriter(sys.stdout.buffer, 1000000), encoding='utf-8')
-
 		self.buffer = [[None for a in range(400)] for b in range(400)]
-		self.coords = set()
+		self.state = [[None for a in range(400)] for b in range(400)]
 
 
-	def draw(self, update, wipe=False):
+	def draw(self, update, width, height):
 
-		if wipe: sys.stdout.write('\x1b[2J')
+		x, y = 0, 0
+		serie = False
 
-		for coord in self.coords:
+		while y < height:
+			while x < width:
 
-			x, y = coord
-			color, car = self.buffer[y][x]
+				if self.state[y][x]:
 
-			#sys.stdout.write('\x1b[38;2;{};{};{}m\x1b[{};{}H{}'.format(*color, y + 1, x + 1, car))
-			sys.stdout.write('\x1b[38;2;%d;%d;%dm\x1b[%d;%dH%1s' % (*color, y + 1, x + 1, car))
-			#sys.stdout.write('\x1b[38;2;' + str(color[0])  + ';' + str(color[1]) + ';' + str(color[2]) + 'm\x1b[' + str(y + 1) + ';' + str(x +1) + 'H' + car)
+					if not(serie):
+						sys.stdout.write('\x1b[%d;%dH'%(y+1, x+1))
+						serie = True
 
-		self.coords.clear()
+					sys.stdout.write(self.buffer[y][x])
+					self.state[y][x] = False
+
+				else:
+					if serie: serie = False
+
+				x += 1
+
+			y += 1
+			x = 0
 
 		update()
 		sys.stdout.flush()

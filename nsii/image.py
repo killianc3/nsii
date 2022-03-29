@@ -1,16 +1,17 @@
 class Image:
 
-	def __init__(self, buffer, coords, path):
+	def __init__(self, buffer, state, path):
 
 		self.size = (40, 20)
 		self.pos = (0, 0)
 
 		self._buffer = buffer
-		self._coords = coords
+		self._state = state
+
 		self._img = []
 		self._img_size = None
 
-		self._cache = [[None for a in range(400)] for b in range(400)]
+		self._cache = []
 		self._cache_size = None
 
 		self.ppmread(path)
@@ -38,31 +39,33 @@ class Image:
 
 		if self.size == self._cache_size:
 
-			for y in range(self.size[1]):
-				for x in range(self.size[0]):
+			p_id = 0
+			for y in range(self.pos[1], self.pos[1] + self.size[1]):
+				for x in range(self.pos[0], self.pos[0] + self.size[0]):
 
-					pixel = self._cache[y][x]
+					if self._buffer[y][x] != self._cache[p_id]:
 
-					if self._buffer[y + self.pos[1]][x + self.pos[0]] != pixel:
+						self._buffer[y][x] = self._cache[p_id]
+						self._state[y][x] = True
 
-						self._buffer[y + self.pos[1]][x + self.pos[0]] = pixel
-
-						self._coords.add((x + self.pos[0], y + self.pos[1]))
+					p_id += 1
 
 		else:
 
 			of_x, of_y = self._img_size[0] / self.size[0], self._img_size[1] / self.size[1]
 			po_x, po_y = 0, 0
 
-			for y in range(self.size[1]):
-				for x in range(self.size[0]):
+			self._cache.clear()
 
-					r, g, b = self._img[round(po_y)][round(po_x)]
+			for y in range(self.pos[1], self.pos[1] + self.size[1]):
+				for x in range(self.pos[0], self.pos[0] + self.size[0]):
 
-					self._buffer[y + self.pos[1]][x + self.pos[0]] = ((r, g, b), '█')
-					self._coords.add((x + self.pos[0], y + self.pos[1]))
+					pixel = '\x1b[38;2;%d;%d;%dm█'%(self._img[round(po_y)][round(po_x)])
 
-					self._cache[y][x] = ((r, g, b), '█')
+					self._buffer[y][x] = pixel
+					self._cache.append(pixel)
+
+					self._state[y][x] = True
 
 					po_x += of_x
 

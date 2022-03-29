@@ -71,16 +71,24 @@ class Nsii:
 	@font.setter
 	def font(self, new_font):
 		self._terminal.font = new_font
+
+
+	@property
+	def m_pos(self):
+		return self._terminal.m_pos
 	
+	@m_pos.setter
+	def m_pos(self, new_pos):
+		self._terminal.m_pos = new_pos
 
 
 	def new_window(self, *args, **kwargs):
-		return window.Window(self._core.buffer, self._core.coords, *args, **kwargs)
+		return window.Window(self._core.buffer, self._core.state, *args, **kwargs)
 
 
 	def new_image(self, *args, **kwargs):
-		return image.Image(self._core.buffer, self._core.coords, *args, **kwargs)
+		return image.Image(self._core.buffer, self._core.state, *args, **kwargs)
 
 
 	def draw(self, *args, **kwargs):
-		self._core.draw(self._fps_handler.update, *args, **kwargs)
+		self._core.draw(self._fps_handler.update, *self.size, *args, **kwargs)

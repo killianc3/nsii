@@ -17,7 +17,9 @@ class Terminal:
 		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-11), 7)
 		#self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-10), 128)
 
-		self.__hide_cursor()
+		#self._rx = self.size[0] / (self.outter_size[0] - 28)
+		#self._ry = self.size[1] / (self.outter_size[1] - 28)
+
 
 	@property
 	def name(self):
@@ -43,7 +45,7 @@ class Terminal:
 
 	@property
 	def outter_size(self):
-		rect = wintypes.RECT()
+		rect = RECT()
 		self.user32.GetWindowRect(self.hWnd, ctypes.pointer(rect))
 		return (rect.right - rect.left, rect.bottom - rect.top)
 
@@ -54,7 +56,7 @@ class Terminal:
 
 	@property
 	def pos(self):
-		rect = wintypes.RECT()
+		rect = RECT()
 		self.user32.GetWindowRect(self.hWnd, ctypes.pointer(rect))
 		return (rect.left, rect.top)
 	
@@ -79,17 +81,23 @@ class Terminal:
 		self.kernel32.SetCurrentConsoleFontEx(self.kernel32.GetStdHandle(-11), c_long(False), pointer(font))
 
 
-	@staticmethod
-	def __hide_cursor():
-		sys.stdout.write('\x1b[?25l')
-		sys.stdout.flush()
+	@property
+	def m_pos(self):
+		pt = POINT()
+		self.user32.GetCursorPos(pointer(pt))
+		return (pt.x, pt.y)
 
+	@m_pos.setter
+	def m_pos(self, new_pos):
+		self.user32.SetCursorPos(*new_pos)
+
+
+class POINT(Structure):
+    _fields_ = [("x", c_long), ("y", c_long)]
+	
 
 class COORD(Structure):
-    _fields_ = [
-        ("X", SHORT),
-        ("Y", SHORT),
-    ]
+    _fields_ = [("X", SHORT), ("Y", SHORT),]
 
 
 class CONSOLE_FONT_INFOEX(Structure):
