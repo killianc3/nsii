@@ -33,12 +33,12 @@ class Nsii:
 
 
 	@property
-	def outter_size(self):
-		return self._terminal.outter_size
+	def client_size(self):
+		return self._terminal.client_size
 
-	@outter_size.setter
-	def outter_size(self, new_size):
-		self._terminal.outter_size = new_size
+	@client_size.setter
+	def client_size(self, new_size):
+		self._terminal.client_size = new_size
 
 
 	@property

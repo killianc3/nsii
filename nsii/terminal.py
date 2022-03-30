@@ -11,6 +11,7 @@ class Terminal:
 
 		self.kernel32 = ctypes.windll.kernel32
 		self.user32 = ctypes.windll.user32
+		self.dwmapi = ctypes.WinDLL("dwmapi")
 
 		self.hWnd = self.kernel32.GetConsoleWindow()
 
@@ -44,25 +45,29 @@ class Terminal:
 
 
 	@property
-	def outter_size(self):
+	def client_size(self):
 		rect = RECT()
-		self.user32.GetWindowRect(self.hWnd, ctypes.pointer(rect))
+		self.user32.GetClientRect(self.hWnd, pointer(rect))
 		return (rect.right - rect.left, rect.bottom - rect.top)
 
-	@outter_size.setter
-	def outter_size(self, new_size):
-		self.user32.MoveWindow(self.hWnd, *self.pos, *new_size, True)
+	@client_size.setter
+	def client_size(self, new_size):
+		width, height = new_size[0] + 32, new_size[1] + 38
+		self.user32.MoveWindow(self.hWnd, *self.pos, width, height, True)
 
 
 	@property
 	def pos(self):
 		rect = RECT()
-		self.user32.GetWindowRect(self.hWnd, ctypes.pointer(rect))
+		#self.dwmapi.DwmGetWindowAttribute(self.hWnd, DWORD(9), pointer(rect), sizeof(rect))
+		self.user32.GetWindowRect(self.hWnd, pointer(rect))
 		return (rect.left, rect.top)
 	
 	@pos.setter
 	def pos(self, new_pos):
-		self.user32.MoveWindow(self.hWnd, *new_pos, *self.outter_size, True)
+		rect = RECT()
+		self.user32.GetWindowRect(self.hWnd, pointer(rect))
+		self.user32.MoveWindow(self.hWnd, *new_pos, rect.right - rect.left, rect.bottom - rect.top, True)
 
 
 	@property
@@ -82,15 +87,26 @@ class Terminal:
 
 
 	@property
-	def m_pos(self):
+	def m_pos_client(self):
 		pt = POINT()
 		self.user32.GetCursorPos(pointer(pt))
+		self.user32.ScreenToClient(self.hWnd, pointer(pt))
 		return (pt.x, pt.y)
 
-	@m_pos.setter
-	def m_pos(self, new_pos):
+	@m_pos_client.setter
+	def m_pos_client(self, new_pos):
 		self.user32.SetCursorPos(*new_pos)
 
+
+	@property
+	def m_pos(self):
+		px, py = round(self.m_pos_client[0]/self.client_size[0]*self.size[0]), round(self.m_pos_client[1]/self.client_size[1]*self.size[1])
+		if px < 0: px = 0
+		elif px > self.size[0]: px = self.size[0]
+		if py < 0: py = 0
+		elif py > self.size[1]: py = self.size[1]
+		return (px, min(self.size[1], py))
+	
 
 class POINT(Structure):
     _fields_ = [("x", c_long), ("y", c_long)]
