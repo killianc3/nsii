@@ -4,7 +4,6 @@ nsii = nsii.Nsii()
 
 nsii.fps_target = 'max'
 nsii.font = ('Terminal', 6)
-#nsii.font = ('Consolas', 16)
 
 background = nsii.new_image('image/win11.ppm')
 

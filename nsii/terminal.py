@@ -16,10 +16,7 @@ class Terminal:
 		self.hWnd = self.kernel32.GetConsoleWindow()
 
 		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-11), 7)
-		#self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-10), 128)
-
-		#self._rx = self.size[0] / (self.outter_size[0] - 28)
-		#self._ry = self.size[1] / (self.outter_size[1] - 28)
+		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-10), 128)
 
 
 	@property
@@ -59,7 +56,6 @@ class Terminal:
 	@property
 	def pos(self):
 		rect = RECT()
-		#self.dwmapi.DwmGetWindowAttribute(self.hWnd, DWORD(9), pointer(rect), sizeof(rect))
 		self.user32.GetWindowRect(self.hWnd, pointer(rect))
 		return (rect.left, rect.top)
 	
@@ -106,7 +102,20 @@ class Terminal:
 		if py < 0: py = 0
 		elif py > self.size[1]: py = self.size[1]
 		return (px, min(self.size[1], py))
-	
+
+	@m_pos.setter
+	def m_pos(self, new_pos):
+		self.m_pos_client = new_pos
+
+
+	def m_click(self, key):
+
+		if key == 'left':
+			return self.user32.GetKeyState(0x01) & 0x8000
+
+		elif key == 'right':
+			return self.user32.GetKeyState(0x02) & 0x8000
+
 
 class POINT(Structure):
     _fields_ = [("x", c_long), ("y", c_long)]

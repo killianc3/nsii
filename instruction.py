@@ -1,51 +1,90 @@
-import nsii        # pour importer 
-nsii = nsii.Nsii() # le module
+# -------------- Initialisation -------------- #
 
-# paramètres (renvoie la valeur et peut etre modifié)
+import nsii        # Importe le module
 
-nsii.name         # str()
-nsii.fps_target   # int() ou 'max'
-nsii.size         # tuple(int(), int())
-nsii.pos          # tuple(int(), int())
-nsii.fps          # float()
-nsii.m_pos        # tuple(int(), int())
+nsii = nsii.Nsii() # Obligatoire au début d'un programme
 
-nsii.size         # tuple(int(), int()) (pas utile)
-nsii.pos         # tuple(int(), int()) (pas utile)
+# -------------- Initialisation -------------- #
 
-nsii.keyboard     # en développement
 
-# fonctions
+# ---------------- Paramètres ---------------- #
 
-nsii.new_image('fichier.ppm')  # renvoie une classe image
-nsii.new_window()              # renvoie une classe window
-nsii.draw()                    # affiche tout à l'écran
+# 1) Récupérer les valeurs du paramètre
+variable = nsii.parametre
 
-# class image
 
-exemple = nsii.new_image('fichier.ppm')
+# 2) Saisir les valeurs du paramètre
+nsii.parametre = variable
 
-# paramètres
 
-exemple.pos 
-exemple.size
+# 3) Les paramètres disponibles
 
-# fonction
+nsii.name         # Nom de la fenêtre  -> str()
 
-exemple.show()
+nsii.fps_target   # Cible du taux de rafraichissement  -> int() or 'max'
 
-# class window
+nsii.size         # Taille de la fenêtre en nombre de caractère  -> (int(), int())
 
-exemple2 = nsii.new_window()
+nsii.pos          # Position de la fenêtre en pixel, et sur le bureau  -> (int(), int())
 
-# paramètres
+nsii.fps          # Taux de rafraîchissement  -> float()
 
-exemple2.pos
-exemple2.size
+nsii.m_pos        # Position la souris en nombre de caractère  -> (int(), int())
 
-# fonctions
+# 4) Les fonctions disponibles
 
-exemple2.dot(x, y, caractere)
-exemple2.line(x0, y0, x1, y1, caractere)
-exemple2.circle(x, y, radius, caractere)
-exemple2.rect(x, y, width, height, caractere)
+nsii.draw()  # Affiche le contenu du buffer à l'écran
+
+nsii.m_click('left')   # Renvoie True si un bouton de la souris est pressé  -> Bool()
+nsii.m_click('right')
+
+# ---------------- Paramètres ---------------- #
+
+
+# ---------------- Class image --------------- #
+
+# 1) Initialisation
+
+variable_image = nsii.new_image('exemple_fichier.ppm')
+
+# 2) Paramètres
+
+variable_image.size  # Taille de l'image en nombre de caractère  -> (int(), int())
+
+variable_image.pos  # Position de l'image en nombre de caractère  -> (int(), int())
+
+# 3) Fonctions
+
+variable_image.show()  # Ajoute l'image dans le buffer (nsii.draw() pour l'afficher)
+
+# ---------------- Class image --------------- #
+
+
+# ---------------- Class window -------------- #
+
+# 1) Initialisation
+
+variable_window = nsii.new_window()
+
+# 2) Paramètres
+
+variable_window.size  # Taille de window en nombre de caractère  -> (int(), int())
+
+variable_window.pos  # Position de window en nombre de caractère  -> (int(), int())
+
+# 3) Fonctions
+
+variable_window.dot(x, y, caractere)  # Affiche le caractère aux coordonnées x, y
+
+variable_window.line(x0, y0, x1, y1, caractere)  # Affiche une ligne
+
+variable_window.circle(x, y, radius, caractere)  # Affiche un cercle
+
+variable_window.rect(x, y, width, height, caractere)  # Affiche un rectangle
+
+# Pour ces 4 fonctions, il est possible de définir la couleur des caractères
+# en ajoutant l'argument -> f_col=(r, g, b), avec une valeur rgb valide
+
+exemple.dot(0, 0, 'X', f_col=(255, 0, 0))
+
+# ---------------- Class window -------------- #

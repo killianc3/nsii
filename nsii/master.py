@@ -92,3 +92,7 @@ class Nsii:
 
 	def draw(self, *args, **kwargs):
 		self._core.draw(self._fps_handler.update, *self.size, *args, **kwargs)
+
+
+	def m_click(self, *args, **kwargs):
+		return self._terminal.m_click(*args, **kwargs)
