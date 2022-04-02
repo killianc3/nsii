@@ -14,7 +14,7 @@ class Image:
 		self._cache = []
 		self._cache_size = None
 
-		self.ppmread(path)
+		self.build_img(path)
 
 
 	@property
@@ -35,7 +35,7 @@ class Image:
 		self._pos = new_pos
 
 
-	def show(self):
+	def show(self, hide=None):
 
 		if self.size == self._cache_size:
 
@@ -43,7 +43,7 @@ class Image:
 			for y in range(self.pos[1], self.pos[1] + self.size[1]):
 				for x in range(self.pos[0], self.pos[0] + self.size[0]):
 
-					if self._buffer[y][x] != self._cache[p_id]:
+					if self._buffer[y][x] != self._cache[p_id] and self._cache[p_id] != None:
 
 						self._buffer[y][x] = self._cache[p_id]
 						self._state[y][x] = True
@@ -60,12 +60,20 @@ class Image:
 			for y in range(self.pos[1], self.pos[1] + self.size[1]):
 				for x in range(self.pos[0], self.pos[0] + self.size[0]):
 
-					pixel = '\x1b[38;2;%d;%d;%dm█'%(self._img[round(po_y)][round(po_x)])
+					color = self._img[round(po_y)][round(po_x)]
 
-					self._buffer[y][x] = pixel
-					self._cache.append(pixel)
+					if color != hide:
 
-					self._state[y][x] = True
+						pixel = '\x1b[38;2;%d;%d;%dm█'%(color)
+
+						self._buffer[y][x] = pixel
+						self._cache.append(pixel)
+
+						self._state[y][x] = True
+
+					else:
+						self._cache.append(None)
+
 
 					po_x += of_x
 
@@ -75,7 +83,7 @@ class Image:
 
 			self._cache_size = self.size
 
-	def ppmread(self, filename):
+	def build_img(self, filename):
 		with open(filename, 'rb') as f:
 
 			line = f.readline().decode('ascii')
