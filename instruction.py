@@ -57,6 +57,11 @@ variable_image.pos  # Position de l'image en nombre de caractère  -> (int(), in
 
 variable_image.show()  # Ajoute l'image dans le buffer (nsii.draw() pour l'afficher)
 
+# Pour la fonction show() il y a possibilité de saisir une couleur qui ne sera pas
+# afficher avec : hide=(r, g, b), utile pour des images qui nécessitent de la transparence
+
+exemple.show(hide=(255, 255, 255))
+
 # ---------------- Class image --------------- #
 
 
