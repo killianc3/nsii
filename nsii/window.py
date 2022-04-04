@@ -31,11 +31,11 @@ class Window:
 
 	def __add_buffer(self, pixel):
 
-		if pixel[-3] >= 0 and pixel[-3] < self.size[0] and pixel[-2] >= 0 and pixel[-2] < self.size[1]:
+		if pixel[1] >= 0 and pixel[1] < self.size[0] and pixel[2] >= 0 and pixel[2] < self.size[1]:
 
 			#print(*pixel[0])
-			self._buffer[pixel[-2] + self.pos[1]][pixel[-3] + self.pos[0]] = '\x1b[38;2;%d;%d;%dm%1s'%(*pixel[:-3], pixel[-1])
-			self._state[pixel[-2] + self.pos[1]][pixel[-3] + self.pos[0]] = True
+			self._buffer[pixel[2] + self.pos[1]][pixel[1] + self.pos[0]] = '8;2;%d;%d;%dm'%pixel[0]
+			self._state[pixel[2] + self.pos[1]][pixel[1] + self.pos[0]] = True
 			#self._coords.add((pixel[-3] + self.pos[0], pixel[-2] + self.pos[1]))
 
 

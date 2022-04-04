@@ -11,12 +11,12 @@ class Terminal:
 
 		self.kernel32 = ctypes.windll.kernel32
 		self.user32 = ctypes.windll.user32
-		self.dwmapi = ctypes.WinDLL("dwmapi")
 
 		self.hWnd = self.kernel32.GetConsoleWindow()
 
 		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-11), 7)
-		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-10), 128)
+		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-11), 64 | 128)
+		#self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-10), 128)
 
 
 	@property
@@ -34,11 +34,12 @@ class Terminal:
 
 	@property
 	def size(self):
-		return (os.get_terminal_size()[0], os.get_terminal_size()[1])
+		width, height = os.get_terminal_size()
+		return (width, 2*height)
 
 	@size.setter
 	def size(self, new_size):
-		os.system('mode con: cols={} lines={}'.format(*new_size))
+		os.system('mode con: cols=%d lines=%d' % (new_size))
 
 
 	@property
@@ -77,7 +78,7 @@ class Terminal:
 	def font(self, new_font):
 		font = self.font
 		font.FaceName = new_font[0]
-		font.dwFontSize.Y = new_font[1]
+		font.dwFontSize.Y, font.dwFontSize.X = new_font[1]
 		font.FontFamily = 0
 		self.kernel32.SetCurrentConsoleFontEx(self.kernel32.GetStdHandle(-11), c_long(False), pointer(font))
 
@@ -97,10 +98,12 @@ class Terminal:
 	@property
 	def m_pos(self):
 		px, py = round(self.m_pos_client[0]/self.client_size[0]*self.size[0]), round(self.m_pos_client[1]/self.client_size[1]*self.size[1])
+
 		if px < 0: px = 0
 		elif px > self.size[0]: px = self.size[0]
 		if py < 0: py = 0
 		elif py > self.size[1]: py = self.size[1]
+		
 		return (px, min(self.size[1], py))
 
 	@m_pos.setter

@@ -2,6 +2,8 @@ from . import core
 from . import terminal
 from . import fps
 
+from . import io
+
 from . import image
 from . import window
 
@@ -82,6 +84,10 @@ class Nsii:
 		self._terminal.m_pos = new_pos
 
 
+	def draw(self, *args, **kwargs):
+		self._core.draw(self._fps_handler.update, *self.size, *args, **kwargs)
+
+
 	def new_window(self, *args, **kwargs):
 		return window.Window(self._core.buffer, self._core.state, *args, **kwargs)
 
@@ -90,9 +96,12 @@ class Nsii:
 		return image.Image(self._core.buffer, self._core.state, *args, **kwargs)
 
 
-	def draw(self, *args, **kwargs):
-		self._core.draw(self._fps_handler.update, *self.size, *args, **kwargs)
-
-
 	def m_click(self, *args, **kwargs):
 		return self._terminal.m_click(*args, **kwargs)
+
+
+	def input(self, *args, **kwargs):
+		return io.input(self.draw, *args, **kwargs)
+
+	def key_pressed(self, *args, **kwargs):
+		return io.key_pressed(self._terminal.user32, *args, **kwargs)
