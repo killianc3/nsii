@@ -41,7 +41,7 @@ while True:
 		nsii.pos = (x, y+1)
 
 
-	pointer.pos = tuple(map(lambda x: x+2, nsii.m_pos))  # positionne l'image aux coordonnées de la souris
-	pointer.show(hide=(255, 255, 255))                   # affiche l'image sans les pixels de couleur blancs
+	pointer.pos = tuple(map(lambda x: x - 2, nsii.m_pos))  # positionne l'image aux coordonnées de la souris
+	pointer.show(hide=(255, 255, 255))                     # affiche l'image sans les pixels de couleur blancs
 
 	nsii.draw()  # affiche tout à l'écran
