@@ -15,8 +15,7 @@ class Terminal:
 		self.hWnd = self.kernel32.GetConsoleWindow()
 
 		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-11), 7)
-		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-11), 64 | 128)
-		#self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-10), 128)
+		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-10), (0x4|0x80|0x20|0x2|0x10|0x1|0x00|0x100))
 
 
 	@property

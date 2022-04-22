@@ -13,8 +13,8 @@ class Core:
 		x, y = 0, 0
 		serie = False
 
-		while y < height:
-			while x < width:
+		for y in range(0, height, 2):
+			for x in range(width):
 
 				if self.state[y][x] or self.state[y+1][x] or force:
 
@@ -29,11 +29,6 @@ class Core:
 
 				else:
 					if serie: serie = False
-
-				x += 1
-
-			y += 2
-			x = 0
 
 		update()
 		sys.stdout.flush()
