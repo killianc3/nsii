@@ -6,9 +6,6 @@ nsii = nsii.Nsii() # Obligatoire au début d'un programme
 
 # -------------- Initialisation -------------- #
 
-
-# ---------------- Paramètres ---------------- #
-
 # 1) Récupérer les valeurs du paramètre
 variable = nsii.parametre
 
@@ -38,14 +35,22 @@ nsii.draw()  # Affiche le contenu du buffer à l'écran
 nsii.m_click('left')   # Renvoie True si un bouton de la souris est pressé  -> bool()
 nsii.m_click('right')
 
-nsii.input((x, y))     # Même comportement que la commande 'input()', mais nécessite une position dans la fenêtre  -> str()
+nsii.input((x, y))     # Même comportement que 'input()', mais nécessite une position dans la fenêtre  -> str()
+nsii.print((x, y))     # Même comportement que 'print()', mais nécessite une position dans la fenêtre (possibilité de changer la couleur du texte avec f_col=(r,g,b), b_col=(r,g,b))
 
 nsii.key_pressed(key)  # Renvoie True si la touche est pressé  -> bool()
 					   # La liste des touches est disponible ici : https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 					   # 'key' correspond à la colonne 'value' du site
 
-# ---------------- Paramètres ---------------- #
+nsii.dot(x, y)                  # Affiche le caractère aux coordonnées x, y
+nsii.line(x0, y0, x1, y1)       # Affiche une ligne
+nsii.circle(x, y, radius)       # Affiche un cercle
+nsii.rect(x, y, width, height)  # Affiche un rectangle
 
+# Pour ces 4 fonctions, il est possible de définir la couleur des caractères
+# en ajoutant l'argument -> f_col=(r, g, b), avec une valeur rgb valide
+
+nsii.dot(0, 0, f_col=(255, 0, 0))
 
 # ---------------- Class image --------------- #
 
@@ -69,33 +74,3 @@ variable_image.show()  # Ajoute l'image dans le buffer (nsii.draw() pour l'affic
 exemple.show(hide=(255, 255, 255))
 
 # ---------------- Class image --------------- #
-
-
-# ---------------- Class window -------------- #
-
-# 1) Initialisation
-
-variable_window = nsii.new_window()
-
-# 2) Paramètres
-
-variable_window.size  # Taille de window en nombre de caractère  -> (int(), int())
-
-variable_window.pos  # Position de window en nombre de caractère  -> (int(), int())
-
-# 3) Fonctions
-
-variable_window.dot(x, y)  # Affiche le caractère aux coordonnées x, y
-
-variable_window.line(x0, y0, x1, y1)  # Affiche une ligne
-
-variable_window.circle(x, y, radius)  # Affiche un cercle
-
-variable_window.rect(x, y, width, height)  # Affiche un rectangle
-
-# Pour ces 4 fonctions, il est possible de définir la couleur des caractères
-# en ajoutant l'argument -> f_col=(r, g, b), avec une valeur rgb valide
-
-exemple.dot(0, 0, f_col=(255, 0, 0))
-
-# ---------------- Class window -------------- #

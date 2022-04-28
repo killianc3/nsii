@@ -17,6 +17,9 @@ class Terminal:
 		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-11), 7)
 		self.kernel32.SetConsoleMode(self.kernel32.GetStdHandle(-10), (0x4|0x80|0x20|0x2|0x10|0x1|0x00|0x100))
 
+		sys.stdout.write('\x1b[?25l')
+		sys.stdout.flush()
+
 
 	@property
 	def name(self):
@@ -110,13 +113,19 @@ class Terminal:
 		self.m_pos_client = new_pos
 
 
+	def key_pressed(self, key):
+		return self.user32.GetKeyState(key) & 0x8000
+
+
 	def m_click(self, key):
 
 		if key == 'left':
-			return self.user32.GetKeyState(0x01) & 0x8000
+			code = 0x01
 
 		elif key == 'right':
-			return self.user32.GetKeyState(0x02) & 0x8000
+			code = 0x02
+
+		return self.key_pressed(code)
 
 
 class POINT(Structure):

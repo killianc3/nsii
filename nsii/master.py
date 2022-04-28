@@ -1,11 +1,10 @@
 from . import core
 from . import terminal
 from . import fps
-
 from . import io
 
 from . import image
-from . import window
+from . import tools
 
 class Nsii:
 
@@ -14,6 +13,7 @@ class Nsii:
 		self._core = core.Core()
 		self._terminal = terminal.Terminal()
 		self._fps_handler = fps.Fps_handler()
+		self._io = io.Io()
 
 
 	@property
@@ -88,8 +88,8 @@ class Nsii:
 		self._core.draw(self._fps_handler.update, *self.size, *args, **kwargs)
 
 
-	def new_window(self, *args, **kwargs):
-		return window.Window(self._core.buffer, self._core.state, *args, **kwargs)
+	#def new_window(self, *args, **kwargs): # inutile
+		#return window.Window(self._core.buffer, self._core.state, *args, **kwargs)
 
 
 	def new_image(self, *args, **kwargs):
@@ -100,8 +100,29 @@ class Nsii:
 		return self._terminal.m_click(*args, **kwargs)
 
 
-	def input(self, *args, **kwargs):
-		return io.input(self.draw, *args, **kwargs)
-
 	def key_pressed(self, *args, **kwargs):
-		return io.key_pressed(self._terminal.user32, *args, **kwargs)
+		return self._terminal.key_pressed(*args, **kwargs)
+
+
+	def input(self, *args, **kwargs):
+		return self._io.input(self.draw, self.print, *args, **kwargs)
+
+
+	def print(self, *args, **kwargs):
+		self._io.print(self._core.buffer, self._core.state, *args, **kwargs)
+
+
+	def dot(self, *args, **kwargs):
+		tools.dot(self._core.buffer, self._core.state, *args, **kwargs)
+
+
+	def line(self, *args, **kwargs):
+		tools.line(self._core.buffer, self._core.state, *args, **kwargs)
+
+
+	def rect(self, *args, **kwargs):
+		tools.rect(self._core.buffer, self._core.state, *args, **kwargs)
+
+
+	def circle(self, *args, **kwargs):
+		tools.circle(self._core.buffer, self._core.state, *args, **kwargs)

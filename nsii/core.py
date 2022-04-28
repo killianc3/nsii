@@ -4,8 +4,8 @@ class Core:
 
 	def __init__(self):
 
-		self.buffer = [[None for a in range(2000)] for b in range(2000)]
-		self.state = [[None for a in range(2000)] for b in range(2000)]
+		self.buffer = [['8;2;60;60;60m' for a in range(2000)] for b in range(2000)]
+		self.state = [[True for a in range(2000)] for b in range(2000)]
 
 
 	def draw(self, update, width, height, force=False):
@@ -22,7 +22,11 @@ class Core:
 						sys.stdout.write('\x1b[%d;%dH'%(y//2+1, x+1))
 						serie = True
 
-					sys.stdout.write(f'\x1b[4{self.buffer[y][x]}\x1b[3{self.buffer[y+1][x]}▄')
+					if self.buffer[y][x][0] == '8':
+						sys.stdout.write(f'\x1b[4{self.buffer[y][x]}\x1b[3{self.buffer[y+1][x]}▄')
+
+					elif self.buffer[y][x][0] != 'None':
+						sys.stdout.write(self.buffer[y][x])
 
 					self.state[y][x] = False
 					self.state[y+1][x] = False

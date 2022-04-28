@@ -7,7 +7,7 @@ nsii = nsii.Nsii()
 nsii.fps_target = 'max'
 nsii.font = ('Consolas', (16, 8))
 
-background = nsii.new_image('image/silicon.ppm')
+background = nsii.new_image('image/win11.ppm')
 
 pointer = nsii.new_image('image/pointer.ppm')
 pointer.size = (5, 5)
@@ -19,27 +19,32 @@ while True:
 	background.size = nsii.size  # taille de l'arrière-plan
 	background.show()            # affichage de l'arrière-plan
 
+	ox, oy = nsii.m_pos
+	while nsii.m_click('left'):
+
+		x, y = nsii.m_pos
+		background.show()
+
+		if x < ox and y < oy:
+			nsii.rect(x, y, ox-x, oy-y)
+
+		elif x < ox:
+			nsii.rect(x, oy, ox-x, y-oy)
+
+		elif y < oy:
+			nsii.rect(ox, y, x-ox, oy-y)
+
+		else:
+			nsii.rect(ox, oy, x-ox, y-oy)
+
+		nsii.draw()
 
 	if nsii.key_pressed(0x20):          # si la touche espace et pressée ->
-		nsii.name = nsii.input((0, 0))  # définis le nom de la fenêtre par ce que l'utilisateur a entré
 
+		nsii.print((0, 0), 'entrez le nom de la fenêtre : ')
+		nsii.draw()
 
-	if nsii.key_pressed(0x25):  # décale la fenêtre à gauche si la flèche gauche est pressée
-		x, y = nsii.pos
-		nsii.pos = (x-1, y)
-
-	if nsii.key_pressed(0x26):  # décale en haut
-		x, y = nsii.pos
-		nsii.pos = (x, y-1)
-
-	if nsii.key_pressed(0x27):  # décale à droite
-		x, y = nsii.pos
-		nsii.pos = (x+1, y)
-
-	if nsii.key_pressed(0x28):  # decale en bas
-		x, y = nsii.pos
-		nsii.pos = (x, y+1)
-
+		nsii.name = nsii.input((30, 0))  # définis le nom de la fenêtre par ce que l'utilisateur a entré
 
 	pointer.pos = tuple(map(lambda x: x - 2, nsii.m_pos))  # positionne l'image aux coordonnées de la souris
 	pointer.show(hide=(255, 255, 255))                     # affiche l'image sans les pixels de couleur blancs
