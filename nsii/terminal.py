@@ -20,6 +20,8 @@ class Terminal:
 		sys.stdout.write('\x1b[?25l')
 		sys.stdout.flush()
 
+		self._p_size = 8
+
 
 	@property
 	def name(self):
@@ -111,6 +113,18 @@ class Terminal:
 	@m_pos.setter
 	def m_pos(self, new_pos):
 		self.m_pos_client = new_pos
+
+
+	@property
+	def p_size(self):
+		return self._p_size
+	
+
+	@p_size.setter
+	def p_size(self, size):
+
+		self.font = ('Consolas', (2 * size, size))
+		self._p_size = size
 
 
 	def key_pressed(self, key):

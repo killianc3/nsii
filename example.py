@@ -5,7 +5,7 @@ import nsii
 nsii = nsii.Nsii()
 
 nsii.fps_target = 'max'
-nsii.font = ('Consolas', (16, 8))
+nsii.p_size = 8
 
 background = nsii.new_image('image/win11.ppm')
 

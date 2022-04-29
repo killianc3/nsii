@@ -28,6 +28,8 @@ nsii.fps          # Taux de rafraîchissement  -> float()
 
 nsii.m_pos        # Position la souris en nombre de caractère  -> (int(), int())
 
+nsii.p_size       # Taille des pixels, spoiler ça affecte les performances  -> int()
+
 # 4) Les fonctions disponibles
 
 nsii.draw()  # Affiche le contenu du buffer à l'écran
@@ -35,8 +37,9 @@ nsii.draw()  # Affiche le contenu du buffer à l'écran
 nsii.m_click('left')   # Renvoie True si un bouton de la souris est pressé  -> bool()
 nsii.m_click('right')
 
-nsii.input((x, y))     # Même comportement que 'input()', mais nécessite une position dans la fenêtre  -> str()
-nsii.print((x, y))     # Même comportement que 'print()', mais nécessite une position dans la fenêtre (possibilité de changer la couleur du texte avec f_col=(r,g,b), b_col=(r,g,b))
+nsii.input((x, y))          # Même comportement que 'input()', mais nécessite une position dans la fenêtre  -> str()
+nsii.print((x, y), max_len) # Même comportement que 'print()', mais nécessite une position dans la fenêtre 
+							# possibilité de changer la couleur du texte avec f_col=(r,g,b), b_col=(r,g,b))
 
 nsii.key_pressed(key)  # Renvoie True si la touche est pressé  -> bool()
 					   # La liste des touches est disponible ici : https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes

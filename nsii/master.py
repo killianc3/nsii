@@ -1,6 +1,7 @@
 from . import core
 from . import terminal
 from . import fps
+
 from . import io
 
 from . import image
@@ -13,7 +14,6 @@ class Nsii:
 		self._core = core.Core()
 		self._terminal = terminal.Terminal()
 		self._fps_handler = fps.Fps_handler()
-		self._io = io.Io()
 
 
 	@property
@@ -66,13 +66,23 @@ class Nsii:
 		self._fps_handler.fps_target = new_target
 
 
-	@property
-	def font(self):
-		return self._terminal.font
+	#@property
+	#def font(self):
+		#return self._terminal.font
 
-	@font.setter
-	def font(self, new_font):
-		self._terminal.font = new_font
+	#@font.setter
+	#def font(self, new_font):
+		#self._terminal.font = new_font
+
+
+	@property
+	def p_size(self):
+		return self._terminal.p_size
+
+
+	@p_size.setter
+	def p_size(self, size):
+		self._terminal.p_size = size
 
 
 	@property
@@ -88,10 +98,6 @@ class Nsii:
 		self._core.draw(self._fps_handler.update, *self.size, *args, **kwargs)
 
 
-	#def new_window(self, *args, **kwargs): # inutile
-		#return window.Window(self._core.buffer, self._core.state, *args, **kwargs)
-
-
 	def new_image(self, *args, **kwargs):
 		return image.Image(self._core.buffer, self._core.state, *args, **kwargs)
 
@@ -105,11 +111,11 @@ class Nsii:
 
 
 	def input(self, *args, **kwargs):
-		return self._io.input(self.draw, self.print, *args, **kwargs)
+		return io.input(self.draw, self.print, *args, **kwargs)
 
 
 	def print(self, *args, **kwargs):
-		self._io.print(self._core.buffer, self._core.state, *args, **kwargs)
+		io.print(self._core.buffer, self._core.state, *args, **kwargs)
 
 
 	def dot(self, *args, **kwargs):
