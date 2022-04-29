@@ -7,7 +7,7 @@ class Io:
 		pass
 
 
-	def input(self, draw, print, pos):
+	def input(self, draw, print, pos, max_len=60):
 
 		while msvcrt.kbhit():
 			msvcrt.getch()
@@ -28,9 +28,11 @@ class Io:
 
 			else:
 
-				print((pos[0] + cursor, pos[1]), user_input)
-				cursor += 1
-				word.append(user_input)
+				if len(word) <= max_len:
+
+					print((pos[0] + cursor, pos[1]), user_input)
+					cursor += 1
+					word.append(user_input)
 
 			draw()
 			user_input = '%c' % msvcrt.getwch()
