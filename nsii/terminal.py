@@ -72,22 +72,6 @@ class Terminal:
 
 
 	@property
-	def font(self):
-		font = CONSOLE_FONT_INFOEX()
-		font.cbSize = sizeof(CONSOLE_FONT_INFOEX)
-		self.kernel32.GetCurrentConsoleFontEx(self.kernel32.GetStdHandle(-11), c_long(False), pointer(font))
-		return font
-
-	@font.setter
-	def font(self, new_font):
-		font = self.font
-		font.FaceName = new_font[0]
-		font.dwFontSize.Y, font.dwFontSize.X = new_font[1]
-		font.FontFamily = 0
-		self.kernel32.SetCurrentConsoleFontEx(self.kernel32.GetStdHandle(-11), c_long(False), pointer(font))
-
-
-	@property
 	def m_pos_client(self):
 		pt = POINT()
 		self.user32.GetCursorPos(pointer(pt))
@@ -123,7 +107,13 @@ class Terminal:
 	@p_size.setter
 	def p_size(self, size):
 
-		self.font = ('Consolas', (2 * size, size))
+		font = CONSOLE_FONT_INFOEX()
+		font.cbSize = sizeof(CONSOLE_FONT_INFOEX)
+		font.FaceName = 'Consolas'
+		font.dwFontSize.Y, font.dwFontSize.X = 2 * size, size
+		font.FontFamily = 0
+		self.kernel32.SetCurrentConsoleFontEx(self.kernel32.GetStdHandle(-11), c_long(False), pointer(font))
+	
 		self._p_size = size
 
 

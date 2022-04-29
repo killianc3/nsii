@@ -3,7 +3,6 @@ from . import terminal
 from . import fps
 
 from . import io
-
 from . import image
 from . import tools
 
@@ -66,19 +65,9 @@ class Nsii:
 		self._fps_handler.fps_target = new_target
 
 
-	#@property
-	#def font(self):
-		#return self._terminal.font
-
-	#@font.setter
-	#def font(self, new_font):
-		#self._terminal.font = new_font
-
-
 	@property
 	def p_size(self):
 		return self._terminal.p_size
-
 
 	@p_size.setter
 	def p_size(self, size):
