@@ -4,7 +4,7 @@ class Core:
 
 	def __init__(self):
 
-		self.buffer = [['8;2;60;60;60m' for a in range(2000)] for b in range(2000)]
+		self.buffer = [['8;2;0;0;0m' for a in range(2000)] for b in range(2000)]
 		self.state = [[True for a in range(2000)] for b in range(2000)]
 
 
