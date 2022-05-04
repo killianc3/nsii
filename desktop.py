@@ -39,26 +39,9 @@ def main():
 	calc.pos = (84, 4)
 	calc.size = (16, 16)
 
-	icons = [calc, player, picture, paint, motus]
-	lastc = [0 for i in range(len(icons))]
-
-	init(nsii)
-	loop(nsii, background, hover, icons, lastc)
-
-def loop(nsii, background, hover, icons, lastc):
-
-	while True:
-
-		if nsii.m_click('left'):
-			on_click(nsii, background, hover, icons, lastc)
-
-		else:
-			routine(nsii, background, hover, icons)
-
-def init(nsii):
+	icons = {'calc':[calc, 0], 'player':[player, 0], 'picture':[picture, 0], 'paint':[paint, 0], 'motus':[motus, 0]}
 
 	nsii.name = 'loading'
-
 	with open('log.log') as log:
 
 		for i in range(160):
@@ -71,6 +54,51 @@ def init(nsii):
 	time.sleep(0.6)
 	nsii.name = 'Les fenêtres'
 
+	while True:
+
+		if nsii.m_click('left'):
+			mx, my = nsii.m_pos
+
+			for icon in icons:
+
+				if mx >= icons[icon][0].pos[0] and mx < icons[icon][0].pos[0] + icons[icon][0].size[0] and my >= icons[icon][0].pos[1] and my < icons[icon][0].pos[1] + icons[icon][0].size[1]:
+
+					if time.time() - icons[icon][1] < 0.4:
+
+						if icon == 'calc': # calc
+							os.system('start cmd /c python calc/')
+
+						elif icon == 'player': # player
+							os.system('start cmd /c python player/')
+
+						elif icon == 'picture': # picture
+							os.system('start cmd /c python picture/')
+
+						elif icon == 'paint': # paint
+							os.system('start cmd /c python paint/')
+
+						elif icon == 'motus': # motus
+							os.system('start cmd /c python motus/')
+
+					hover.pos = icons[icon][0].pos
+					icons[icon][1] = time.time()
+					of_x, of_y = mx - icons[icon][0].pos[0], my - icons[icon][0].pos[1]
+
+					while nsii.m_click('left'):
+
+						if abs(mx - nsii.m_pos[0]) > 2 or abs(my - nsii.m_pos[1]) > 2:
+
+							while nsii.m_click('left'):
+
+								icons[icon][0].pos = (nsii.m_pos[0] - of_x, nsii.m_pos[1] - of_y)
+								hover.pos = icons[icon][0].pos
+
+								routine(nsii, background, hover, icons)
+
+		else:
+			routine(nsii, background, hover, icons)
+
+
 def routine(nsii, background, hover, icons):
 
 	background.size = nsii.size
@@ -79,48 +107,10 @@ def routine(nsii, background, hover, icons):
 	hover.show(hide=(255, 0, 0))
 
 	for icon in icons:
-		icon.show(hide=(255, 0, 0))
+		icons[icon][0].show(hide=(255, 0, 0))
 
 	nsii.draw()
 
-def on_click(nsii, background, hover, icons, lastc):
-
-	mx, my = nsii.m_pos
-
-	for indice, icon in enumerate(icons):
-
-		if mx >= icon.pos[0] and mx < icon.pos[0] + icon.size[0] and my >= icon.pos[1] and my < icon.pos[1] + icon.size[1]:
-
-			if time.time() - lastc[indice] < 0.4:
-
-				if indice == 0:
-					pass
-
-				elif indice == 1:
-					pass
-
-				elif indice == 2:
-					pass
-
-				elif indice == 3:
-					pass
-
-				else:
-					pass
-
-			hover.pos = icon.pos
-			lastc[indice] = time.time()
-			of_x, of_y = mx - icon.pos[0], my - icon.pos[1]
-
-			while nsii.m_click('left'):
-
-				if abs(mx - nsii.m_pos[0]) > 2 or abs(my - nsii.m_pos[1]) > 2:
-
-					while nsii.m_click('left'):
-
-						icon.pos = (nsii.m_pos[0] - of_x, nsii.m_pos[1] - of_y)
-						hover.pos = icon.pos
-						routine(nsii, background, hover, icons)
 
 if __name__ == '__main__':
 	main()

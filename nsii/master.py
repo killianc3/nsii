@@ -6,6 +6,8 @@ from . import io
 from . import image
 from . import tools
 
+import pathlib
+
 class Nsii:
 
 	def __init__(self):
@@ -13,6 +15,8 @@ class Nsii:
 		self._core = core.Core()
 		self._terminal = terminal.Terminal()
 		self._fps_handler = fps.Fps_handler()
+
+		self._script_location = pathlib.Path(__file__).absolute().parent.parent
 
 
 	@property
@@ -87,8 +91,8 @@ class Nsii:
 		self._core.draw(self._fps_handler.update, *self.size, *args, **kwargs)
 
 
-	def new_image(self, *args, **kwargs):
-		return image.Image(self._core.buffer, self._core.state, *args, **kwargs)
+	def new_image(self, path, *args, **kwargs):
+		return image.Image(self._core.buffer, self._core.state, self._script_location / f'{path}', *args, **kwargs)
 
 
 	def m_click(self, *args, **kwargs):

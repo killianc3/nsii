@@ -9,9 +9,6 @@ nsii.p_size = 8
 
 background = nsii.new_image('image/win11.ppm')
 
-pointer = nsii.new_image('image/pointer.ppm')
-pointer.size = (5, 5)
-
 while True:
 
 	#nsii.name = f'framerate : {nsii.fps:.1f} size : {nsii.size} client_size : {nsii.client_size} win_pos : {nsii.pos} m_pos : {nsii.m_pos}'
@@ -45,8 +42,5 @@ while True:
 		nsii.draw()
 
 		nsii.name = nsii.input((30, 0))  # définis le nom de la fenêtre par ce que l'utilisateur a entré
-
-	pointer.pos = tuple(map(lambda x: x - 2, nsii.m_pos))  # positionne l'image aux coordonnées de la souris
-	pointer.show(hide=(255, 255, 255))                     # affiche l'image sans les pixels de couleur blancs
 
 	nsii.draw()  # affiche tout à l'écran
