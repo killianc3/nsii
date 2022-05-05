@@ -4,8 +4,11 @@ import random
 import time
 import sys
 import os
+import pathlib
 
 def main():
+
+	script_location = pathlib.Path(__file__).absolute().parent
 
 	nsii = Nsii()
 
@@ -66,24 +69,19 @@ def main():
 					if time.time() - icons[icon][1] < 0.4:
 
 						if icon == 'calc': # calc
-							launch('Calc/MainCalc.py')
-							#os.system('start cmd /k python Calc/MainCalc.py')
+							os.system('start cmd /c Calc\\MainCalc.py')
 
 						elif icon == 'player': # player
-							launch('Player/PlayerInterface.py')
-							#os.system('start cmd /k python Player/PlayerInterface.py')
+							os.system('start cmd /c Player\\PlayerInterface.py')
 
 						elif icon == 'picture': # picture
-							launch('picture/')
-							#os.system('start cmd /k python picture/')
+							os.system('start cmd /c Picture\\main.py')
 
 						elif icon == 'paint': # paint
-							launch('Paint/Paint.py')
-							#os.system('start cmd /k python Paint/Paint.py')
+							os.system('start cmd /c Paint\\Paint.py')
 
 						elif icon == 'motus': # motus
-							launch('Motus/motus.py')
-							#os.system('start cmd /k python Motus/motus.py')
+							os.system('start cmd /c Motus\\motus.py')
 
 					hover.pos = icons[icon][0].pos
 					icons[icon][1] = time.time()
@@ -119,7 +117,7 @@ def routine(nsii, background, hover, icons):
 
 def launch(path):
 
-	names = ('python', 'py', 'python2', 'python3')
+	names = ('py', 'py', 'python2', 'python3')
 	for name in names:
 
 		try:
