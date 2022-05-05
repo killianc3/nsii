@@ -78,7 +78,7 @@ def main():
 							os.system('start cmd /c python Paint/Paint.py')
 
 						elif icon == 'motus': # motus
-							os.system('start cmd /c python motus/')
+							os.system('start cmd /c python Motus/motus.py')
 
 					hover.pos = icons[icon][0].pos
 					icons[icon][1] = time.time()
