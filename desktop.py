@@ -75,7 +75,7 @@ def main():
 							os.system('start cmd /c Player\\PlayerInterface.py')
 
 						elif icon == 'picture': # picture
-							os.system('start cmd /c Picture\\main.py')
+							os.system('start cmd /k Picture\\main.py')
 
 						elif icon == 'paint': # paint
 							os.system('start cmd /c Paint\\Paint.py')
