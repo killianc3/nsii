@@ -66,19 +66,19 @@ def main():
 					if time.time() - icons[icon][1] < 0.4:
 
 						if icon == 'calc': # calc
-							os.system('start cmd /c python Calc/MainCalc.py')
+							os.system('start cmd /k python Calc/MainCalc.py')
 
 						elif icon == 'player': # player
-							os.system('start cmd /c python Player/PlayerInterface.py')
+							os.system('start cmd /k python Player/PlayerInterface.py')
 
 						elif icon == 'picture': # picture
-							os.system('start cmd /c python picture/')
+							os.system('start cmd /k python picture/')
 
 						elif icon == 'paint': # paint
-							os.system('start cmd /c python Paint/Paint.py')
+							os.system('start cmd /k python Paint/Paint.py')
 
 						elif icon == 'motus': # motus
-							os.system('start cmd /c python Motus/motus.py')
+							os.system('start cmd /k python Motus/motus.py')
 
 					hover.pos = icons[icon][0].pos
 					icons[icon][1] = time.time()
