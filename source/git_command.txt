@@ -1,0 +1,6 @@
+git add ..
+git commit "test"
+git branch -M main
+git push -u origin main
+
+Le moteur graphique répond à une contrainte : n'utiliser que les bibliotheque natives de python, en d'autre terme l'utilisateur n'a pas besoin d'utilise lacommande 'pip install ...'. Pour repondre a cette contrainte le moteur utilise le terminal de windows avec des 'ansi escape sequence. En d'autre termes pour afficher des pixels ou du texte le moteur n'utilise que des print(), plus précisement sys.stdout.write().

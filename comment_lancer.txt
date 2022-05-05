@@ -1,0 +1,1 @@
+Lancer 'desktop.py' dans le dossier source.
