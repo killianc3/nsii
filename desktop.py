@@ -66,16 +66,16 @@ def main():
 					if time.time() - icons[icon][1] < 0.4:
 
 						if icon == 'calc': # calc
-							os.system('start cmd /c python calc/')
+							os.system('start cmd /c python Calc/MainCalc.py')
 
 						elif icon == 'player': # player
-							os.system('start cmd /c python player/')
+							os.system('start cmd /c python Player/PlayerInterface.py')
 
 						elif icon == 'picture': # picture
 							os.system('start cmd /c python picture/')
 
 						elif icon == 'paint': # paint
-							os.system('start cmd /c python paint/')
+							os.system('start cmd /c python Paint/Paint.py')
 
 						elif icon == 'motus': # motus
 							os.system('start cmd /c python motus/')
