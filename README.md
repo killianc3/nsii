@@ -25,4 +25,4 @@ https://user-images.githubusercontent.com/101042422/178258748-15366975-d090-4421
 
 ## Authors
 
-- [@bruh](https://www.instagram.com/killianfrr/)
+- [@killianfrr](https://www.instagram.com/killianfrr/)
