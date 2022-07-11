@@ -17,6 +17,12 @@ See documentation.py
 
 https://user-images.githubusercontent.com/101042422/178258748-15366975-d090-4421-b92e-b876581c85a7.mp4
 
+## Installation
+
+```bash
+  pip install nsii
+```
+
 ## Authors
 
 - [@bruh](https://www.instagram.com/killianfrr/)
