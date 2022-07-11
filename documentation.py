@@ -51,5 +51,4 @@ image.pos   # image position  ->  (int, int)
 image.show()  # displays the image
 
 # note that you can hide a specific color by entering this parameter.
-
 hide=(255, 255, 255)
