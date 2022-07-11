@@ -9,12 +9,10 @@ This CLI uses only native python libraries, which means that you don't need to u
 - support for simple geometry
 - support for the text
 
-## Demo
-
-Insert gif or link to demo
-
-
 ## Documentation
 
 See documentation.py
 
+## Demo
+
+https://user-images.githubusercontent.com/101042422/178258748-15366975-d090-4421-b92e-b876581c85a7.mp4
