@@ -47,7 +47,7 @@ nsii.parameter = values
 | `nsii.rect(x, y, width, height, f_col=(r, g, b), b_col=(r, g, b))` | draw rectangle |
 | `nsii.input((x, y))` | retrieve user input |
 | `nsii.print((x, y), text)` | print text |
-| `nsii.key_pressed(key)` | retrieve status of given key code (see: https://bit.ly/3RtrWua) |
+| `nsii.key_pressed(key)` | retrieve status of given key code see: https://bit.ly/3RtrWua |
 
 - image initialisation
 ```python
