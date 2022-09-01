@@ -54,7 +54,7 @@ nsii.parameter = values
 image = nsii.new_image('example.ppm')
 ```
 
-- available parameter
+- available parameters
 
 | Parameter | Type | Description |
 | :-------- | :--- | :---------- |
