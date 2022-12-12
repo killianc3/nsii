@@ -1,5 +1,5 @@
 
-# Python CLI tools for windows
+# Python pixel game engine that uses only native python.
 
 A simple tools to make basics shape and more in your terminal. It also give you basics controls over your terminal behaviour, like the window size.
 
